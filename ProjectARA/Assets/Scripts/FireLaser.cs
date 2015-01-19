@@ -6,13 +6,17 @@ public class FireLaser : MonoBehaviour {
     public Direction direction;
     public bool Enabled;
     public Color OutLaserColor;
+
+    public GameObject gameObjectHitByMyLaser = null;
     
     Vector3 trueDirection;
     LineRenderer line;
+    LaserHit laserHitScript;
 
     void Awake()
     {
         line = gameObject.GetComponent<LineRenderer>();
+        laserHitScript = gameObject.GetComponent<LaserHit>();
         line.enabled = false;
         UpdateDirection();
 
@@ -22,8 +26,17 @@ public class FireLaser : MonoBehaviour {
         Fire();
     }
 
+    void Update()
+    {
+        if (!Enabled)
+        {
+            line.enabled = false;
+        }
+    }
+
     public void Fire()
     {
+        Enabled = true;
         line.enabled = true;
         UpdateDirection();
 
@@ -34,6 +47,7 @@ public class FireLaser : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit))
         {
+            gameObjectHitByMyLaser = hit.transform.gameObject;
             //Get the distance to the center of the collider and save it as an offset
             float halfSize = ((hit.collider as BoxCollider).size.x/2f)*hit.transform.localScale.x;
             Vector3 offset = new Vector3(halfSize, halfSize, halfSize);
@@ -48,10 +62,8 @@ public class FireLaser : MonoBehaviour {
             line.SetPosition(0, ray.origin );
             line.SetPosition(1, ray.origin + trueDirection * hit.distance + offset);
 
-            
-
-            LaserHit laserHit = hit.transform.gameObject.GetComponent<LaserHit>();
-            laserHit.HandleLaserHit(trueDirection, OutLaserColor);
+            LaserHit laserHit = gameObjectHitByMyLaser.GetComponent<LaserHit>();
+            laserHit.HandleLaserHit(trueDirection, OutLaserColor, gameObject);
         }
         else
         {
@@ -59,6 +71,17 @@ public class FireLaser : MonoBehaviour {
             line.SetPosition(1, ray.GetPoint(100));
 
             Debug.Log("I hit nothing!");
+        }
+    }
+
+    public void StopFiring()
+    {
+        laserHitScript.gameObjectThatHitMe = null;
+        line.enabled = false;
+        if (gameObjectHitByMyLaser != null)
+        {
+            FireLaser targetsFireLaserScript = gameObjectHitByMyLaser.GetComponent<FireLaser>();
+            targetsFireLaserScript.StopFiring();
         }
     }
 

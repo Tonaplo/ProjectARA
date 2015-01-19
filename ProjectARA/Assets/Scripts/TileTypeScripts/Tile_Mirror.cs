@@ -5,6 +5,32 @@ public class Tile_Mirror : MonoBehaviour {
 
     public MirrorReflectionDirection ReflectionDirection;
 
+    FireLaser fireLaserScript;
+    LaserHit laserHitScript;
+
+    void Awake()
+    {
+        fireLaserScript = gameObject.GetComponent<FireLaser>();
+        laserHitScript = gameObject.GetComponent<LaserHit>();
+
+        switch (ReflectionDirection)
+        {
+            case MirrorReflectionDirection.UpLeft:
+                transform.Rotate(Vector3.forward * 180f);
+                break;
+            case MirrorReflectionDirection.LeftDown:
+                transform.Rotate(Vector3.forward * -90f);
+                break;
+            case MirrorReflectionDirection.DownRight:
+                break;
+            case MirrorReflectionDirection.RightUp:
+                transform.Rotate(Vector3.forward * +90f);
+                break;
+            default:
+                break;
+        }
+    }
+
     //Direction is the direction of the recieved laser
     public bool MirrorHit(Vector3 direction, out FireLaser.Direction newDirection)
     {
@@ -75,5 +101,40 @@ public class Tile_Mirror : MonoBehaviour {
         LeftDown,
         DownRight,
         RightUp
+    }
+
+    void OnMouseDown()
+    {
+        
+
+        transform.Rotate(Vector3.forward * -90f);
+
+        if (ReflectionDirection == MirrorReflectionDirection.DownRight)
+            ReflectionDirection = MirrorReflectionDirection.LeftDown;
+        else if (ReflectionDirection == MirrorReflectionDirection.LeftDown)
+            ReflectionDirection = MirrorReflectionDirection.UpLeft;
+        else if (ReflectionDirection == MirrorReflectionDirection.UpLeft)
+            ReflectionDirection = MirrorReflectionDirection.RightUp;
+        else
+            ReflectionDirection = MirrorReflectionDirection.DownRight;
+
+        //Tell the object we were hitting, that we're not hitting it anymore
+        if (fireLaserScript.gameObjectHitByMyLaser != null)
+        {
+            FireLaser fireLaserOfTargetScript = fireLaserScript.gameObjectHitByMyLaser.GetComponent<FireLaser>();
+            fireLaserOfTargetScript.StopFiring();
+
+            fireLaserScript.gameObjectHitByMyLaser = null;
+        }
+
+        if (laserHitScript.gameObjectThatHitMe != null)
+        {
+            //Stop firing and handle refiring if we're actually supposed to
+            fireLaserScript.Enabled = false;
+            FireLaser fireLaserOfHitterScript = laserHitScript.gameObjectThatHitMe.GetComponent<FireLaser>();
+            fireLaserOfHitterScript.Fire();
+        }
+
+        
     }
 }
