@@ -45,3 +45,5 @@ Temporary Items
 #Ignore the Library, the Temp, the ProjectSettings and the Solutions
 ProjectARA/Temp/
 ProjectARA/Library/
+ProjectARA/ProjectARA-csharp.sln
+ProjectARA/ProjectARA-csharp.suo
