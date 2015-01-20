@@ -47,7 +47,6 @@ public class FireLaser : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit))
         {
-            gameObjectHitByMyLaser = hit.transform.gameObject;
             //Get the distance to the center of the collider and save it as an offset
             float halfSize = ((hit.collider as BoxCollider).size.x/2f)*hit.transform.localScale.x;
             Vector3 offset = new Vector3(halfSize, halfSize, halfSize);
@@ -56,19 +55,18 @@ public class FireLaser : MonoBehaviour {
             offset.y = offset.y * trueDirection.y;
             offset.z = offset.z * trueDirection.z;
 
-            Debug.Log("offset.magnitude " + offset.magnitude);
-
             //Draw the line
             line.SetPosition(0, ray.origin );
             line.SetPosition(1, ray.origin + trueDirection * hit.distance + offset);
 
-            LaserHit laserHit = gameObjectHitByMyLaser.GetComponent<LaserHit>();
+            LaserHit laserHit = hit.transform.gameObject.GetComponent<LaserHit>();
+
             laserHit.HandleLaserHit(trueDirection, OutLaserColor, gameObject);
         }
         else
         {
             line.SetPosition(0, ray.origin);
-            line.SetPosition(1, ray.GetPoint(100));
+            line.SetPosition(1, ray.GetPoint(4));
 
             Debug.Log("I hit nothing!");
         }

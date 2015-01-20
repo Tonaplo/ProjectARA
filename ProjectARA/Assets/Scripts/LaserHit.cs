@@ -29,6 +29,16 @@ public class LaserHit : MonoBehaviour {
     //The direction and color is of the laser that hit us
     public void HandleLaserHit(Vector3 direction, Color color, GameObject hitter)
     {
+        //Makes sure this object was not hit beforehand!
+        //TODO: Handle things that can get hit by more than one thing
+        if (gameObjectThatHitMe != null)
+        {
+            return;
+        }
+
+        //Store that we hit this gameobject in the gameobject that hit us
+        hitter.GetComponent<FireLaser>().gameObjectHitByMyLaser = gameObject;
+        
         color.a = 0.6f;
 
         //Store a reference to the gameobject that hit us

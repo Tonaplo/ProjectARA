@@ -105,8 +105,6 @@ public class Tile_Mirror : MonoBehaviour {
 
     void OnMouseDown()
     {
-        
-
         transform.Rotate(Vector3.forward * -90f);
 
         if (ReflectionDirection == MirrorReflectionDirection.DownRight)
@@ -131,8 +129,15 @@ public class Tile_Mirror : MonoBehaviour {
         {
             //Stop firing and handle refiring if we're actually supposed to
             fireLaserScript.Enabled = false;
-            FireLaser fireLaserOfHitterScript = laserHitScript.gameObjectThatHitMe.GetComponent<FireLaser>();
-            fireLaserOfHitterScript.Fire();
+
+            //Save a reference to the gameobject that's supposed to refire
+            GameObject refiringGameObject = laserHitScript.gameObjectThatHitMe; 
+
+            //Reset our reference to that gameobject
+            laserHitScript.gameObjectThatHitMe = null;
+
+            //Fire from the previously stored reference
+            refiringGameObject.GetComponent<FireLaser>().Fire();
         }
 
         
