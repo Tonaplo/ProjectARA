@@ -43,7 +43,9 @@ Temporary Items
 .apdisk
 
 #Ignore the Library, the Temp, the ProjectSettings and the Solutions
-ProjectARA/Temp/
-ProjectARA/Library/**
+ProjectARA/[Tt]emp/
+ProjectARA/[Ll]ibrary/
+ProjectARA/[Oo]bj/
+ProjectARA/[Bb]uild/
 ProjectARA/ProjectARA-csharp.sln
 ProjectARA/ProjectARA-csharp.suo
