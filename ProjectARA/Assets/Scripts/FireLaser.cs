@@ -78,6 +78,7 @@ public class FireLaser : MonoBehaviour {
         {
             FireLaser targetsFireLaserScript = gameObjectHitByMyLaser.GetComponent<FireLaser>();
             targetsFireLaserScript.StopFiring(i+1);
+            gameObjectHitByMyLaser = null;
         }
         else
         {

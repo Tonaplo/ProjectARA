@@ -55,14 +55,17 @@ public class LaserHit : MonoBehaviour {
             case TileType.TypeOfTile.Empty:
                 break;
 
-            case TileType.TypeOfTile.Laser:
+            case TileType.TypeOfTile.Emitter:
                 break;
 
-            case TileType.TypeOfTile.Mirror:
+            case TileType.TypeOfTile.Receiver:
+                break;
+
+            case TileType.TypeOfTile.Prism:
                 sprite.color = color;
-                Tile_Mirror mirrorScript = gameObject.GetComponent<Tile_Mirror>();
+                Tile_Prism mirrorScript = gameObject.GetComponent<Tile_Prism>();
                 FireLaser.Direction newDirection;
-                if (mirrorScript.MirrorHit(direction, out newDirection))
+                if (mirrorScript.PrismHit(direction, out newDirection))
                 {
                     fireLaserScript.direction = newDirection;
                     fireLaserScript.Enabled = true;

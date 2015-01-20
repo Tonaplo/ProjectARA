@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tile_Mirror : MonoBehaviour {
+public class Tile_Prism : MonoBehaviour {
 
-    public MirrorReflectionDirection ReflectionDirection;
+    public PrismReflectionDirection ReflectionDirection;
 
     FireLaser fireLaserScript;
     LaserHit laserHitScript;
@@ -15,15 +15,15 @@ public class Tile_Mirror : MonoBehaviour {
 
         switch (ReflectionDirection)
         {
-            case MirrorReflectionDirection.UpLeft:
+            case PrismReflectionDirection.UpLeft:
                 transform.Rotate(Vector3.forward * -90f);
                 break;
-            case MirrorReflectionDirection.LeftDown:
+            case PrismReflectionDirection.LeftDown:
                 break;
-            case MirrorReflectionDirection.DownRight:
+            case PrismReflectionDirection.DownRight:
                 transform.Rotate(Vector3.forward * 90f);
                 break;
-            case MirrorReflectionDirection.RightUp:
+            case PrismReflectionDirection.RightUp:
                 transform.Rotate(Vector3.forward * 180f);
                 break;
             default:
@@ -32,18 +32,18 @@ public class Tile_Mirror : MonoBehaviour {
     }
 
     //Direction is the direction of the recieved laser
-    public bool MirrorHit(Vector3 direction, out FireLaser.Direction newDirection)
+    public bool PrismHit(Vector3 direction, out FireLaser.Direction newDirection)
     {
         if (direction.y == 0)
         {
             if (direction.x == 1)
             {
-                if (ReflectionDirection == MirrorReflectionDirection.LeftDown)
+                if (ReflectionDirection == PrismReflectionDirection.LeftDown)
                 {
                     newDirection = FireLaser.Direction.Down;
                     return true;
                 }
-                else if (ReflectionDirection == MirrorReflectionDirection.UpLeft)
+                else if (ReflectionDirection == PrismReflectionDirection.UpLeft)
                 {
                     newDirection = FireLaser.Direction.Up;
                     return true;
@@ -51,12 +51,12 @@ public class Tile_Mirror : MonoBehaviour {
             }
             else
             {
-                if (ReflectionDirection == MirrorReflectionDirection.DownRight)
+                if (ReflectionDirection == PrismReflectionDirection.DownRight)
                 {
                     newDirection = FireLaser.Direction.Down;
                     return true;
                 }
-                else if (ReflectionDirection == MirrorReflectionDirection.RightUp)
+                else if (ReflectionDirection == PrismReflectionDirection.RightUp)
                 {
                     newDirection = FireLaser.Direction.Up;
                     return true;
@@ -65,12 +65,12 @@ public class Tile_Mirror : MonoBehaviour {
         }
         else if (direction.y == 1)
         {
-            if (ReflectionDirection == MirrorReflectionDirection.DownRight)
+            if (ReflectionDirection == PrismReflectionDirection.DownRight)
             {
                 newDirection = FireLaser.Direction.Right;
                 return true;
             }
-            else if (ReflectionDirection == MirrorReflectionDirection.LeftDown)
+            else if (ReflectionDirection == PrismReflectionDirection.LeftDown)
             {
                 newDirection = FireLaser.Direction.Left;
                 return true;
@@ -78,12 +78,12 @@ public class Tile_Mirror : MonoBehaviour {
         }
         else
         {
-            if (ReflectionDirection == MirrorReflectionDirection.RightUp)
+            if (ReflectionDirection == PrismReflectionDirection.RightUp)
             {
                 newDirection = FireLaser.Direction.Right;
                 return true;
             }
-            else if (ReflectionDirection == MirrorReflectionDirection.UpLeft)
+            else if (ReflectionDirection == PrismReflectionDirection.UpLeft)
             {
                 newDirection = FireLaser.Direction.Left;
                 return true;
@@ -95,7 +95,7 @@ public class Tile_Mirror : MonoBehaviour {
         return false;
     }
 
-    public enum MirrorReflectionDirection
+    public enum PrismReflectionDirection
     {
         UpLeft,
         LeftDown,
@@ -107,14 +107,14 @@ public class Tile_Mirror : MonoBehaviour {
     {
         transform.Rotate(Vector3.forward * -90f);
 
-        if (ReflectionDirection == MirrorReflectionDirection.DownRight)
-            ReflectionDirection = MirrorReflectionDirection.LeftDown;
-        else if (ReflectionDirection == MirrorReflectionDirection.LeftDown)
-            ReflectionDirection = MirrorReflectionDirection.UpLeft;
-        else if (ReflectionDirection == MirrorReflectionDirection.UpLeft)
-            ReflectionDirection = MirrorReflectionDirection.RightUp;
+        if (ReflectionDirection == PrismReflectionDirection.DownRight)
+            ReflectionDirection = PrismReflectionDirection.LeftDown;
+        else if (ReflectionDirection == PrismReflectionDirection.LeftDown)
+            ReflectionDirection = PrismReflectionDirection.UpLeft;
+        else if (ReflectionDirection == PrismReflectionDirection.UpLeft)
+            ReflectionDirection = PrismReflectionDirection.RightUp;
         else
-            ReflectionDirection = MirrorReflectionDirection.DownRight;
+            ReflectionDirection = PrismReflectionDirection.DownRight;
 
         //Tell the object we were hitting, that we're not hitting it anymore
         if (fireLaserScript.gameObjectHitByMyLaser != null)

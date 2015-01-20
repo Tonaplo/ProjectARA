@@ -11,8 +11,9 @@ public class TileType : MonoBehaviour {
     public enum TypeOfTile
     {
         Empty,
-        Laser,
-        Mirror,
+        Emitter,
+        Receiver,
+        Prism,
         Straight
     }
 }
