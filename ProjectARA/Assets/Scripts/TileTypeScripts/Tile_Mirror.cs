@@ -16,15 +16,15 @@ public class Tile_Mirror : MonoBehaviour {
         switch (ReflectionDirection)
         {
             case MirrorReflectionDirection.UpLeft:
-                transform.Rotate(Vector3.forward * 180f);
-                break;
-            case MirrorReflectionDirection.LeftDown:
                 transform.Rotate(Vector3.forward * -90f);
                 break;
+            case MirrorReflectionDirection.LeftDown:
+                break;
             case MirrorReflectionDirection.DownRight:
+                transform.Rotate(Vector3.forward * 90f);
                 break;
             case MirrorReflectionDirection.RightUp:
-                transform.Rotate(Vector3.forward * +90f);
+                transform.Rotate(Vector3.forward * 180f);
                 break;
             default:
                 break;
