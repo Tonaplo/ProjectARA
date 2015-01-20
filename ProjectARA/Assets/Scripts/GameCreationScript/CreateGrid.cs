@@ -5,6 +5,7 @@ public class CreateGrid : MonoBehaviour {
 
     public Transform Tile;
     public Transform Emitter;
+    public Transform Target;
 
 	// Use this for initialization
 	void Start () 
@@ -19,6 +20,8 @@ public class CreateGrid : MonoBehaviour {
 
         Emitter.GetComponent<FireLaser>().direction = FireLaser.Direction.Right;
         Instantiate(Emitter, new Vector3(-5 * tileWidth, 0 * tileWidth, 0), Quaternion.Euler(Vector3.forward * -90f));
+
+        Instantiate(Target, new Vector3(5 * tileWidth, 3 * tileWidth, 0), Quaternion.identity);
 
 	}
 	

@@ -76,13 +76,13 @@ public class FireLaser : MonoBehaviour {
 
     public void StopFiring()
     {
-        laserHitScript.gameObjectThatHitMe = null;
         line.enabled = false;
         if (gameObjectHitByMyLaser != null)
         {
             FireLaser targetsFireLaserScript = gameObjectHitByMyLaser.GetComponent<FireLaser>();
             targetsFireLaserScript.StopFiring();
         }
+        laserHitScript.gameObjectThatHitMe = null;
     }
 
     void UpdateDirection()
