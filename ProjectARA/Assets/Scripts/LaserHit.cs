@@ -22,6 +22,7 @@ public class LaserHit : MonoBehaviour {
         if (gameObjectThatHitMe == null)
         {
             sprite.color = Color.grey;
+            gameObjectThatHitMe = null;
         }
     }
 
@@ -69,12 +70,14 @@ public class LaserHit : MonoBehaviour {
                 sprite.color = color;
                 Tile_Straight straightScript = gameObject.GetComponent<Tile_Straight>();
                 Color newColor;
-
-                straightScript.StraightHit(color, out newColor);
-                fireLaserScript.direction = fireLaserScript.GetDirectionFromVector3(direction);
-                fireLaserScript.OutLaserColor = newColor;
-                fireLaserScript.Enabled = true;
-                fireLaserScript.Fire();
+                if (straightScript.AllowLaserToPassThrough(direction))
+                {
+                    straightScript.StraightHit(color, out newColor);
+                    fireLaserScript.direction = fireLaserScript.GetDirectionFromVector3(direction);
+                    fireLaserScript.OutLaserColor = newColor;
+                    fireLaserScript.Enabled = true;
+                    fireLaserScript.Fire();
+                }
                 break;
 
             default:
