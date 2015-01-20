@@ -61,24 +61,27 @@ public class FireLaser : MonoBehaviour {
 
             LaserHit laserHit = hit.transform.gameObject.GetComponent<LaserHit>();
 
-            laserHit.HandleLaserHit(trueDirection, OutLaserColor, gameObject);
+            if(laserHit.gameObjectThatHitMe == null || laserHit.gameObjectThatHitMe == gameObject)
+                laserHit.HandleLaserHit(trueDirection, OutLaserColor, gameObject);
         }
         else
         {
             line.SetPosition(0, ray.origin);
             line.SetPosition(1, ray.GetPoint(4));
-
-            Debug.Log("I hit nothing!");
         }
     }
 
-    public void StopFiring()
+    public void StopFiring(int i)
     {
         line.enabled = false;
         if (gameObjectHitByMyLaser != null)
         {
             FireLaser targetsFireLaserScript = gameObjectHitByMyLaser.GetComponent<FireLaser>();
-            targetsFireLaserScript.StopFiring();
+            targetsFireLaserScript.StopFiring(i+1);
+        }
+        else
+        {
+            Debug.Log("End of recursive call: " + i);
         }
         laserHitScript.gameObjectThatHitMe = null;
     }

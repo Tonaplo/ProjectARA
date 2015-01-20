@@ -15,7 +15,7 @@ public class CreateGrid : MonoBehaviour {
 
         for (int y = -4; y < 5; y++) {
             for (int x = -4; x < 5; x++) {
-                if(Random.value < 0.5)
+                if (Random.value < 0.5)
                     Instantiate(MirrorTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
                 else
                     Instantiate(StraightTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
