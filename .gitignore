@@ -44,6 +44,4 @@ Temporary Items
 
 #Ignore the Library, the Temp, the ProjectSettings and the Solutions
 ProjectARA/Temp
-ProjectARA/Assembly-CSharp-vs.csproj
-ProjectARA/Assembly-CSharp.csproj
 ProjectARA/Library
