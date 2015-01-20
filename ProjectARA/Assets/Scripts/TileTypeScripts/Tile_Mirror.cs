@@ -122,9 +122,16 @@ public class Tile_Mirror : MonoBehaviour {
             FireLaser fireLaserOfTargetScript = fireLaserScript.gameObjectHitByMyLaser.GetComponent<FireLaser>();
             fireLaserOfTargetScript.StopFiring();
 
+            LaserHit laserHitOfTargetScript = fireLaserScript.gameObjectHitByMyLaser.GetComponent<LaserHit>();
+            laserHitOfTargetScript.gameObjectThatHitMe = null;
+
             fireLaserScript.gameObjectHitByMyLaser = null;
         }
 
+        laserHitScript.HandleLaserHit(laserHitScript.directionOfLaserHittingMe, laserHitScript.colorOfLaserHittingMe, laserHitScript.gameObjectThatHitMe);
+        //fireLaserScript = false;
+
+        /*
         if (laserHitScript.gameObjectThatHitMe != null)
         {
             //Stop firing and handle refiring if we're actually supposed to
@@ -139,6 +146,7 @@ public class Tile_Mirror : MonoBehaviour {
             //Fire from the previously stored reference
             refiringGameObject.GetComponent<FireLaser>().Fire();
         }
+         */
 
         
     }

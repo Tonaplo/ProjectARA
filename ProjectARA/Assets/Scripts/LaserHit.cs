@@ -5,6 +5,7 @@ public class LaserHit : MonoBehaviour {
 
     public GameObject gameObjectThatHitMe = null;
     public Vector3 directionOfLaserHittingMe;
+    public Color colorOfLaserHittingMe;
 
     TileType tileScript;
     FireLaser fireLaserScript;
@@ -34,7 +35,9 @@ public class LaserHit : MonoBehaviour {
         //TODO: Handle things that can get hit by more than one thing
         if (gameObjectThatHitMe != null)
         {
-            return;
+            //If we're NOT being hit by what hit us earlier, return
+            if(gameObjectThatHitMe != hitter)
+                return;
         }
 
         //Store that we hit this gameobject in the gameobject that hit us
@@ -45,7 +48,8 @@ public class LaserHit : MonoBehaviour {
         //Store a reference to the gameobject that hit us
         gameObjectThatHitMe = hitter;
         directionOfLaserHittingMe = direction;
-        
+        colorOfLaserHittingMe = color;
+
         switch (tileScript.Type)
         {
             case TileType.TypeOfTile.Empty:
@@ -64,6 +68,10 @@ public class LaserHit : MonoBehaviour {
                     fireLaserScript.Enabled = true;
                     fireLaserScript.Fire();
                 }
+                else
+                {
+                    fireLaserScript.Enabled = false;
+                }
                 break;
 
             case TileType.TypeOfTile.Straight:
@@ -77,6 +85,10 @@ public class LaserHit : MonoBehaviour {
                     fireLaserScript.OutLaserColor = newColor;
                     fireLaserScript.Enabled = true;
                     fireLaserScript.Fire();
+                }
+                else
+                {
+                    fireLaserScript.Enabled = false;
                 }
                 break;
 
