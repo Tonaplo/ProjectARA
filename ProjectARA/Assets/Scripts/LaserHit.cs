@@ -11,11 +11,14 @@ public class LaserHit : MonoBehaviour {
     FireLaser fireLaserScript;
     SpriteRenderer sprite;
 
+    GameObject gameController;
+
     void Awake()
     {
         tileScript = gameObject.GetComponent<TileType>();
         fireLaserScript = gameObject.GetComponent<FireLaser>();
         sprite = gameObject.GetComponent<SpriteRenderer>();
+        gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     void Update()
@@ -59,6 +62,11 @@ public class LaserHit : MonoBehaviour {
                 break;
 
             case TileType.TypeOfTile.Receiver:
+                Tile_Receiver receiverScript = gameObject.GetComponent<Tile_Receiver>();
+                if (receiverScript.HandleLaserHit(color))
+                    gameController.GetComponent<CheckWinConditions>().DidWeWin();
+                else 
+                    Debug.Log(color + " is not the right color");
                 break;
 
             case TileType.TypeOfTile.Prism:
