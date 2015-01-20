@@ -48,7 +48,7 @@ public class FireLaser : MonoBehaviour {
         if (Physics.Raycast(ray, out hit))
         {
             //Get the distance to the center of the collider and save it as an offset
-            float halfSize = ((hit.collider as BoxCollider).size.x/2f)*hit.transform.localScale.x;
+            float halfSize = ((hit.collider as BoxCollider).size.y/2f)*hit.transform.localScale.y;
             Vector3 offset = new Vector3(halfSize, halfSize, halfSize);
 
             offset.x = offset.x * trueDirection.x;

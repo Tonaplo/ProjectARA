@@ -3,18 +3,22 @@ using System.Collections;
 
 public class CreateGrid : MonoBehaviour {
 
-    public Transform Tile;
+    public Transform MirrorTiles;
+    public Transform StraightTiles;
     public Transform Emitter;
     public Transform Target;
 
 	// Use this for initialization
 	void Start () 
     {
-	    float tileWidth = (float)Tile.renderer.bounds.size.x;
+        float tileWidth = (float)MirrorTiles.renderer.bounds.size.x;
 
         for (int y = -4; y < 5; y++) {
             for (int x = -4; x < 5; x++) {
-                Instantiate(Tile, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
+                if(Random.value < 0.5)
+                    Instantiate(MirrorTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
+                else
+                    Instantiate(StraightTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
             }
         }
 
