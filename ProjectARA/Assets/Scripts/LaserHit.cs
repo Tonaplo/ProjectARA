@@ -75,6 +75,7 @@ public class LaserHit : MonoBehaviour {
                 FireLaser.Direction newDirection;
                 if (mirrorScript.PrismHit(direction, out newDirection))
                 {
+                    fireLaserScript.OutLaserColor = color;
                     fireLaserScript.direction = newDirection;
                     fireLaserScript.Enabled = true;
                     fireLaserScript.Fire();
@@ -94,6 +95,24 @@ public class LaserHit : MonoBehaviour {
                     straightScript.StraightHit(color, out newColor);
                     fireLaserScript.direction = fireLaserScript.GetDirectionFromVector3(direction);
                     fireLaserScript.OutLaserColor = newColor;
+                    fireLaserScript.Enabled = true;
+                    fireLaserScript.Fire();
+                }
+                else
+                {
+                    fireLaserScript.Enabled = false;
+                }
+                break;
+
+            case TileType.TypeOfTile.Filter:
+                
+                Tile_Filter filterScript = gameObject.GetComponent<Tile_Filter>();
+                
+                if (filterScript.AllowLaserToPassThrough(direction))
+                {
+                    sprite.color = color + filterScript.FilterColor;
+                    fireLaserScript.direction = fireLaserScript.GetDirectionFromVector3(direction);
+                    fireLaserScript.OutLaserColor = filterScript.FilterColor;
                     fireLaserScript.Enabled = true;
                     fireLaserScript.Fire();
                 }

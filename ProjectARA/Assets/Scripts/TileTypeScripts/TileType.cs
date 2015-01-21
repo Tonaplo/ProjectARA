@@ -14,6 +14,7 @@ public class TileType : MonoBehaviour {
         Emitter,
         Receiver,
         Prism,
-        Straight
+        Straight,
+        Filter
     }
 }

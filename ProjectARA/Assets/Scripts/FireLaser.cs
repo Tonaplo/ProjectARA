@@ -38,6 +38,8 @@ public class FireLaser : MonoBehaviour {
     {
         Enabled = true;
         line.enabled = true;
+        OutLaserColor.a = 1f;
+        line.SetColors(OutLaserColor, OutLaserColor);
         UpdateDirection();
 
         Ray ray = new Ray(transform.position + new Vector3(0, 0, -0.1f), trueDirection);

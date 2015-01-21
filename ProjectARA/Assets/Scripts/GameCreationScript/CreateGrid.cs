@@ -3,8 +3,9 @@ using System.Collections;
 
 public class CreateGrid : MonoBehaviour {
 
-    public Transform MirrorTiles;
+    public Transform PrismTiles;
     public Transform StraightTiles;
+    public Transform FilterTiles;
     public Transform Emitter;
     public Transform Receiver;
 
@@ -20,14 +21,21 @@ public class CreateGrid : MonoBehaviour {
         KillAllReceivers();
         KillAllLasers();
 
-        float tileWidth = (float)MirrorTiles.renderer.bounds.size.x;
+        float tileWidth = (float)PrismTiles.renderer.bounds.size.x;
+
+        int xcoord = Random.Range(-4, 5);
+        int ycoord = Random.Range(-4, 5);
 
         for (int y = -4; y < 5; y++)
         {
             for (int x = -4; x < 5; x++)
             {
-                if (Random.value < 0.5)
-                    Instantiate(MirrorTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
+                if (xcoord == x && ycoord == y)
+                    Instantiate(FilterTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
+
+                else if (Random.value < 0.5)
+                    Instantiate(PrismTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
+
                 else
                     Instantiate(StraightTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
             }
