@@ -9,6 +9,7 @@ public class CreateGrid : MonoBehaviour {
     public Transform Emitter;
     public Transform Receiver;
     public Transform Wall;
+    public Transform DestructibleTiles;
 
     int xcoord, ycoord;
     float tileWidth;
@@ -34,14 +35,17 @@ public class CreateGrid : MonoBehaviour {
         {
             for (int x = -4; x < 5; x++)
             {
+                float value = Random.value;
                 if (xcoord == x && ycoord == y)
                     Instantiate(FilterTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
 
-                else if (Random.value < 0.5)
+                else if (value < 0.5)
                     Instantiate(PrismTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
 
-                else
+                else if(value > 0.6)
                     Instantiate(StraightTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
+                else
+                    Instantiate(DestructibleTiles, new Vector3(x * tileWidth, y * tileWidth, 0), Quaternion.identity);
             }
         }
 

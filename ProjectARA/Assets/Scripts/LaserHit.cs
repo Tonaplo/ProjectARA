@@ -25,8 +25,12 @@ public class LaserHit : MonoBehaviour {
     {
         if (gameObjectThatHitMe == null)
         {
-            sprite.color = Color.grey;
-            gameObjectThatHitMe = null;
+            if(tileScript.Type == TileType.TypeOfTile.Destructible)
+                sprite.color = Color.cyan;
+            else if (tileScript.Type == TileType.TypeOfTile.Wall)
+                sprite.color = Color.black;
+            else
+                sprite.color = Color.grey;
         }
     }
 
@@ -123,7 +127,9 @@ public class LaserHit : MonoBehaviour {
                 break;
 
             case TileType.TypeOfTile.Wall:
-                //TODO: add some code here that makes use able to destroy the wall.
+                break;
+                
+            case TileType.TypeOfTile.Destructible:
                 break;
 
             default:
