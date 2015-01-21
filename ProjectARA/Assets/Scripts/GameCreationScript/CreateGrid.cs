@@ -8,6 +8,10 @@ public class CreateGrid : MonoBehaviour {
     public Transform FilterTiles;
     public Transform Emitter;
     public Transform Receiver;
+    public Transform Wall;
+
+    int xcoord, ycoord;
+    float tileWidth;
 
 	// Use this for initialization
 	void Start () 
@@ -21,10 +25,10 @@ public class CreateGrid : MonoBehaviour {
         KillAllReceivers();
         KillAllLasers();
 
-        float tileWidth = (float)PrismTiles.renderer.bounds.size.x;
+        tileWidth = (float)PrismTiles.renderer.bounds.size.x;
 
-        int xcoord = Random.Range(-4, 5);
-        int ycoord = Random.Range(-4, 5);
+        xcoord = Random.Range(-4, 5);
+        ycoord = Random.Range(-4, 5);
 
         for (int y = -4; y < 5; y++)
         {
@@ -41,6 +45,11 @@ public class CreateGrid : MonoBehaviour {
             }
         }
 
+        GenerateEmitterAndReceiver();
+    }
+
+    void GenerateEmitterAndReceiver()
+    {
         Quaternion emitterRotation;
 
         if (Random.value < 0.5f)
@@ -80,8 +89,44 @@ public class CreateGrid : MonoBehaviour {
         Instantiate(Emitter, new Vector3(ycoord * tileWidth, xcoord * tileWidth, 0), emitterRotation);
         Instantiate(Receiver, new Vector3(xcoord * tileWidth, ycoord * tileWidth, 0), Quaternion.identity);
 
-       GameObject.FindGameObjectWithTag("Laser").GetComponent<FireLaser>().Fire();
+        GameObject.FindGameObjectWithTag("Laser").GetComponent<FireLaser>().Fire();
 
+        GenerateWallsAroundTiles();
+    }
+
+    void GenerateWallsAroundTiles()
+    {
+        for (int i = -5; i < 6; i++)
+        {
+            if ((xcoord == i && ycoord == -5) || (xcoord == -5 && ycoord == i))
+                ;//Do nothing
+            else
+                Instantiate(Wall, new Vector3(-5 * tileWidth, i * tileWidth, 0), Quaternion.identity);
+        }
+
+        for (int i = -5; i < 6; i++)
+        {
+            if ((xcoord == i && ycoord == 5) || (xcoord == 5 && ycoord == i))
+                ;//Do nothing
+            else
+                Instantiate(Wall, new Vector3(5 * tileWidth, i * tileWidth, 0), Quaternion.identity);
+        }
+
+        for (int i = -4; i < 5; i++)
+        {
+            if ((ycoord == i && xcoord == -5) || (ycoord == -5 && xcoord == i))
+                ;//Do nothing
+            else
+                Instantiate(Wall, new Vector3(i * tileWidth, -5 * tileWidth, 0), Quaternion.identity);
+        }
+
+        for (int i = -4; i < 5; i++)
+        {
+            if ((ycoord == i && xcoord == 5) || (ycoord == 5 && xcoord == i))
+                ;//Do nothing
+            else
+                Instantiate(Wall, new Vector3(i * tileWidth, 5 * tileWidth, 0), Quaternion.identity);
+        }
     }
 
     void KillAllTiles()

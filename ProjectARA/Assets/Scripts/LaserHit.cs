@@ -122,6 +122,10 @@ public class LaserHit : MonoBehaviour {
                 }
                 break;
 
+            case TileType.TypeOfTile.Wall:
+                //TODO: add some code here that makes use able to destroy the wall.
+                break;
+
             default:
                 break;
         }
