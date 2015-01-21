@@ -41,10 +41,44 @@ public class CreateGrid : MonoBehaviour {
             }
         }
 
-        Emitter.GetComponent<FireLaser>().direction = FireLaser.Direction.Right;
-        Instantiate(Emitter, new Vector3(-5 * tileWidth, 0 * tileWidth, 0), Quaternion.Euler(Vector3.forward * -90f));
+        Quaternion emitterRotation;
 
-        Instantiate(Receiver, new Vector3(5 * tileWidth, 3 * tileWidth, 0), Quaternion.identity);
+        if (Random.value < 0.5f)
+        {
+            xcoord = Random.Range(-4, 5);
+            if (Random.value < 0.5f)
+            {
+                ycoord = -5;
+                Emitter.GetComponent<FireLaser>().direction = FireLaser.Direction.Right;
+            }
+            else
+            {
+                ycoord = 5;
+                Emitter.GetComponent<FireLaser>().direction = FireLaser.Direction.Left;
+            }
+            emitterRotation = Quaternion.Euler(Vector3.forward * 90f);
+        }
+        else
+        {
+            ycoord = Random.Range(-4, 5);
+            if (Random.value < 0.5f)
+            {
+                Emitter.transform.Rotate(Vector3.forward * -90f);
+                xcoord = -5;
+                Emitter.GetComponent<FireLaser>().direction = FireLaser.Direction.Up;
+            }
+            else
+            {
+                Emitter.transform.Rotate(Vector3.forward * -90f);
+                xcoord = 5;
+                Emitter.GetComponent<FireLaser>().direction = FireLaser.Direction.Down;
+            }
+            emitterRotation = Quaternion.identity;
+        }
+
+
+        Instantiate(Emitter, new Vector3(ycoord * tileWidth, xcoord * tileWidth, 0), emitterRotation);
+        Instantiate(Receiver, new Vector3(xcoord * tileWidth, ycoord * tileWidth, 0), Quaternion.identity);
 
        GameObject.FindGameObjectWithTag("Laser").GetComponent<FireLaser>().Fire();
 
