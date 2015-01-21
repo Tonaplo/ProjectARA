@@ -17,6 +17,9 @@ public class CreateGrid : MonoBehaviour {
     public void GenerateNewGrid()
     {
         KillAllTiles();
+        KillAllReceivers();
+        KillAllLasers();
+
         float tileWidth = (float)MirrorTiles.renderer.bounds.size.x;
 
         for (int y = -4; y < 5; y++)
@@ -34,6 +37,9 @@ public class CreateGrid : MonoBehaviour {
         Instantiate(Emitter, new Vector3(-5 * tileWidth, 0 * tileWidth, 0), Quaternion.Euler(Vector3.forward * -90f));
 
         Instantiate(Receiver, new Vector3(5 * tileWidth, 3 * tileWidth, 0), Quaternion.identity);
+
+       GameObject.FindGameObjectWithTag("Laser").GetComponent<FireLaser>().Fire();
+
     }
 
     void KillAllTiles()
@@ -45,9 +51,24 @@ public class CreateGrid : MonoBehaviour {
             Destroy(AllTiles[i]);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    void KillAllReceivers()
+    {
+        GameObject[] AllReceivers = GameObject.FindGameObjectsWithTag("Receiver");
+
+        for (var i = 0; i < AllReceivers.Length; i++)
+        {
+            Destroy(AllReceivers[i]);
+        }
+    }
+
+    void KillAllLasers()
+    {
+        GameObject[] AllLasers = GameObject.FindGameObjectsWithTag("Laser");
+
+        for (var i = 0; i < AllLasers.Length; i++)
+        {
+            Destroy(AllLasers[i]);
+        }
+    }
 }
